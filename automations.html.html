@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Automations - TaskFlow</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/automations.css">
+</head>
+<body>
+  <!-- Toast Container -->
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <!-- Toasts will be added here dynamically -->
+  </div>
+
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-layout-text-sidebar-reverse fs-4 me-2"></i>
+          <h5 class="mb-0">TaskFlow</h5>
+        </div>
+        <button class="btn btn-link sidebar-close d-md-none" id="sidebarClose">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <ul class="sidebar-menu list-unstyled">
+        <li class="sidebar-item">
+          <a href="index.html" class="sidebar-link">
+            <i class="bi bi-speedometer2 me-2"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="tasks.html" class="sidebar-link">
+            <i class="bi bi-list-check me-2"></i>
+            <span>Tasks</span>
+          </a>
+        </li>
+        <li class="sidebar-item active">
+          <a href="automations.html" class="sidebar-link">
+            <i class="bi bi-gear me-2"></i>
+            <span>Automations</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="settings.html" class="sidebar-link">
+            <i class="bi bi-sliders me-2"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <button class="btn btn-sm btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#integrationsModal">
+          <i class="bi bi-box-arrow-in-right me-2"></i>Integrations
+        </button>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="content">
+      <!-- Top Navigation -->
+      <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="btn btn-link" id="sidebarToggle">
+            <i class="bi bi-list fs-4"></i>
+          </button>
+          <form class="d-flex mx-auto search-form">
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-search"></i>
+              </span>
+              <input type="search" class="form-control border-start-0" placeholder="Search automations..." id="searchInput">
+            </div>
+          </form>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" role="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-bell"></i>
+                <span class="badge rounded-pill bg-danger">3</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                <li><h6 class="dropdown-header">Notifications</h6></li>
+                <li><a class="dropdown-item" href="#">New task assigned</a></li>
+                <li><a class="dropdown-item" href="#">Workflow completed</a></li>
+                <li><a class="dropdown-item" href="#">Integration update</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-link nav-link" id="themeToggle">
+                <i class="bi bi-moon"></i>
+              </button>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://via.placeholder.com/36" alt="User" class="rounded-circle" width="32" height="32">
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="container-fluid py-4">
+        <div class="row mb-4">
+          <div class="col-md-8">
+            <h1 class="h3 mb-0">Automation Builder</h1>
+            <p class="text-muted">Create and manage your task workflows and automations.</p>
+          </div>
+          <div class="col-md-4 d-flex justify-content-md-end align-items-center">
+            <div class="btn-group me-2">
+              <button type="button" class="btn btn-outline-secondary active" id="viewAutomations">
+                <i class="bi bi-layout-three-columns"></i>
+              </button>
+              <button type="button" class="btn btn-outline-secondary" id="viewEditor">
+                <i class="bi bi-pencil-square"></i>
+              </button>
+            </div>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createAutomationModal">
+              <i class="bi bi-plus-lg me-1"></i> New Workflow
+            </button>
+          </div>
+        </div>
+
+        <!-- Automation Gallery -->
+        <div class="row mb-4" id="automationsGallery">
+          <div class="col-12">
+            <div class="card border-0">
+              <div class="card-header bg-white">
+                <ul class="nav nav-tabs card-header-tabs">
+                  <li class="nav-item">
+                    <a class="nav-link active" href="#myAutomations" data-bs-toggle="tab">My Workflows</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#templates" data-bs-toggle="tab">Templates</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#archived" data-bs-toggle="tab">Archived</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <div class="tab-content">
+                  <div class="tab-pane fade show active" id="myAutomations">
+                    <div class="row g-4" id="myAutomationsList">
+                      <!-- Automations will be loaded here by JavaScript -->
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="templates">
+                    <div class="row g-4" id="templatesList">
+                      <!-- Templates will be loaded here by JavaScript -->
+                    </div>
+                  </div>
+                  <div class="tab-pane fade" id="archived">
+                    <div class="row g-4" id="archivedList">
+                      <!-- Archived automations will be loaded here by JavaScript -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Automation Editor (Hidden by default) -->
+        <div class="row mb-4 d-none" id="automationEditor">
+          <div class="col-12">
+            <div class="card border-0">
+              <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <input type="text" class="form-control-plaintext h5 mb-0 editable-title" value="Customer Onboarding Workflow" id="automationTitle">
+                <div class="btn-group">
+                  <button class="btn btn-outline-secondary" id="cancelEdit">
+                    Cancel
+                  </button>
+                  <button class="btn btn-success" id="saveAutomation">
+                    <i class="bi bi-save me-1"></i> Save
+                  </button>
+                </div>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-lg-8">
+                    <div class="automation-canvas mb-4">
+                      <div class="automation-trigger">
+                        <div class="trigger-icon">
+                          <i class="bi bi-play-circle"></i>
+                        </div>
+                        <div class="trigger-content">
+                          <h6>When</h6>
+                          <select class="form-select" id="triggerSelect">
+                            <option value="task_created">Task is created</option>
+                            <option value="task_assigned">Task is assigned</option>
+                            <option value="task_completed">Task is completed</option>
+                            <option value="deadline_approaching">Deadline is approaching</option>
+                            <option value="manual_trigger">Manual trigger</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="automation-connector">
+                        <div class="automation-connector-line"></div>
+                      </div>
+
+                      <div class="automation-steps" id="automationStepsContainer">
+                        <!-- Steps will be loaded here by JavaScript -->
+                        <div class="automation-step" data-step-id="1">
+                          <div class="automation-step-header">
+                            <div class="step-icon">
+                              <i class="bi bi-envelope"></i>
+                            </div>
+                            <div class="step-content">
+                              <h6>Send Email</h6>
+                              <p class="mb-0">Send a welcome email to new user</p>
+                            </div>
+                            <div class="step-actions">
+                              <button class="btn btn-sm btn-link text-secondary" data-bs-toggle="modal" data-bs-target="#editStepModal">
+                                <i class="bi bi-pencil"></i>
+                              </button>
+                              <button class="btn btn-sm btn-link text-danger">
+                                <i class="bi bi-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="automation-connector">
+                          <div class="automation-connector-line"></div>
+                        </div>
+
+                        <div class="automation-step" data-step-id="2">
+                          <div class="automation-step-header">
+                            <div class="step-icon">
+                              <i class="bi bi-calendar-check"></i>
+                            </div>
+                            <div class="step-content">
+                              <h6>Create Task</h6>
+                              <p class="mb-0">Schedule onboarding call</p>
+                            </div>
+                            <div class="step-actions">
+                              <button class="btn btn-sm btn-link text-secondary" data-bs-toggle="modal" data-bs-target="#editStepModal">
+                                <i class="bi bi-pencil"></i>
+                              </button>
+                              <button class="btn btn-sm btn-link text-danger">
+                                <i class="bi bi-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="automation-connector">
+                          <div class="automation-connector-line"></div>
+                        </div>
+
+                        <div class="automation-step" data-step-id="3">
+                          <div class="automation-step-header">
+                            <div class="step-icon">
+                              <i class="bi bi-check-square"></i>
+                            </div>
+                            <div class="step-content">
+                              <h6>Wait for Completion</h6>
+                              <p class="mb-0">Wait for welcome call to be completed</p>
+                            </div>
+                            <div class="step-actions">
+                              <button class="btn btn-sm btn-link text-secondary" data-bs-toggle="modal" data-bs-target="#editStepModal">
+                                <i class="bi bi-pencil"></i>
+                              </button>
+                              <button class="btn btn-sm btn-link text-danger">
+                                <i class="bi bi-trash"></i>
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div class="automation-connector add-step-connector">
+                          <div class="automation-connector-line"></div>
+                          <button class="btn btn-sm btn-primary add-step-btn" data-bs-toggle="modal" data-bs-target="#addStepModal">
+                            <i class="bi bi-plus-lg"></i> Add Step
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="card bg-light">
+                      <div class="card-header bg-light">
+                        <h5 class="mb-0">Workflow Settings</h5>
+                      </div>
+                      <div class="card-body">
+                        <div class="mb-3">
+                          <label for="workflowDesc" class="form-label">Description</label>
+                          <textarea class="form-control" id="workflowDesc" rows="3">Customer onboarding process that sends welcome email and schedules initial call.</textarea>
+                        </div>
+                        <div class="mb-3">
+                          <label for="workflowOwner" class="form-label">Owner</label>
+                          <select class="form-select" id="workflowOwner">
+                            <option selected>John Doe</option>
+                            <option>Jane Smith</option>
+                            <option>Robert Johnson</option>
+                          </select>
+                        </div>
+                        <div class="mb-3">
+                          <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="activateWorkflow" checked>
+                            <label class="form-check-label" for="activateWorkflow">Activate Workflow</label>
+                          </div>
+                        </div>
+                        <div class="mb-3">
+                          <label class="form-label">Webhook</label>
+                          <div class="input-group">
+                            <input type="text" class="form-control" value="https://api.taskflow.com/webhook/abc123" readonly>
+                            <button class="btn btn-outline-secondary" type="button">
+                              <i class="bi bi-clipboard"></i>
+                            </button>
+                          </div>
+                          <small class="text-muted">Use this URL to trigger this workflow externally.</small>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Integrations Panel -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="card border-0">
+              <div class="card-header bg-white">
+                <h5 class="mb-0">Connected Integrations</h5>
+              </div>
+              <div class="card-body">
+                <div class="row g-4" id="connectedIntegrations">
+                  <!-- Connected integrations will be loaded here by JavaScript -->
+                </div>
+              </div>
+              <div class="card-footer bg-white text-center">
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#integrationsModal">
+                  <i class="bi bi-plus-lg me-1"></i> Add More Integrations
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Create Automation Modal -->
+  <div class="modal fade" id="createAutomationModal" tabindex="-1" aria-labelledby="createAutomationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createAutomationModalLabel">Create New Workflow</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="createAutomationForm">
+            <div class="mb-3">
+              <label for="newAutomationName" class="form-label">Workflow Name</label>
+              <input type="text" class="form-control" id="newAutomationName" required>
+            </div>
+            <div class="mb-3">
+              <label for="newAutomationDesc" class="form-label">Description</label>
+              <textarea class="form-control" id="newAutomationDesc" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label for="automationTrigger" class="form-label">Trigger</label>
+              <select class="form-select" id="automationTrigger">
+                <option value="task_created">When a task is created</option>
+                <option value="task_assigned">When a task is assigned</option>
+                <option value="task_completed">When a task is completed</option>
+                <option value="deadline_approaching">When a deadline is approaching</option>
+                <option value="manual_trigger">Manual trigger</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Start From</label>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="startFrom" id="startEmpty" value="empty" checked>
+                <label class="form-check-label" for="startEmpty">
+                  Empty workflow
+                </label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="startFrom" id="startTemplate" value="template">
+                <label class="form-check-label" for="startTemplate">
+                  From template
+                </label>
+              </div>
+              <select class="form-select mt-2" id="templateSelect" disabled>
+                <option value="">Select a template</option>
+                <option value="onboarding">Customer Onboarding</option>
+                <option value="bug_fix">Bug Fix Process</option>
+                <option value="approval">Approval Process</option>
+              </select>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="createWorkflowBtn">Create & Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Step Modal -->
+  <div class="modal fade" id="addStepModal" tabindex="-1" aria-labelledby="addStepModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addStepModalLabel">Add Workflow Step</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-4">
+            <input type="text" class="form-control" placeholder="Search actions..." id="stepSearchInput">
+          </div>
+          
+          <h6 class="text-muted mb-3">Task Actions</h6>
+          <div class="list-group mb-4">
+            <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" data-step-type="create_task">
+              <div class="step-icon me-3">
+                <i class="bi bi-calendar-plus"></i>
+              </div>
+              <div>
+                <h6 class="mb-0">Create Task</h6>
+                <p class="text-muted small mb-0">Create a new task with specified details</p>
+              </div>
+            </button>
+            <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" data-step-type="update_task">
+              <div class="step-icon me-3">
+                <i class="bi bi-pencil-square"></i>
+              </div>
+              <div>
+                <h6 class="mb-0">Update Task</h6>
+                <p class="text-muted small mb-0">Update an existing task's properties</p>
+              </div>
+            </button>
+            <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" data-step-type="assign_task">
+              <div class="step-icon me-3">
+                <i class="bi bi-person-check"></i>
+              </div>
+              <div>
+                <h6 class="mb-0">Assign Task</h6>
+                <p class="text-muted small mb-0">Assign task to a team member</p>
+              </div>
+            </button>
+          </div>
+          
+          <h6 class="text-muted mb-3">Notifications</h6>
+          <div class="list-group mb-4">
+            <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" data-step-type="send_email">
+              <div class="step-icon me-3">
+                <i class="bi bi-envelope"></i>
+              </div>
+              <div>
+                <h6 class="mb-0">Send Email</h6>
+                <p class="text-muted small mb-0">Send an email notification</p>
+              </div>
+            </button>
+            <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" data-step-type="send_slack">
+              <div class="step-icon me-3">
+                <i class="bi bi-chat-dots"></i>
+              </div>
+              <div>
+                <h6 class="mb-0">Send Slack Message</h6>
+                <p class="text-muted small mb-0">Send a message to a Slack channel</p>
+              </div>
+            </button>
+          </div>
+          
+          <h6 class="text-muted mb-3">Flow Control</h6>
+          <div class="list-group">
+            <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" data-step-type="wait">
+              <div class="step-icon me-3">
+                <i class="bi bi-hourglass-split"></i>
+              </div>
+              <div>
+                <h6 class="mb-0">Wait</h6>
+                <p class="text-muted small mb-0">Wait for a specified time period</p>
+              </div>
+            </button>
+            <button type="button" class="list-group-item list-group-item-action d-flex align-items-center" data-step-type="condition">
+              <div class="step-icon me-3">
+                <i class="bi bi-columns-gap"></i>
+              </div>
+              <div>
+                <h6 class="mb-0">Condition</h6>
+                <p class="text-muted small mb-0">Split workflow based on conditions</p>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Step Modal -->
+  <div class="modal fade" id="editStepModal" tabindex="-1" aria-labelledby="editStepModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editStepModalLabel">Edit Step: Send Email</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="editStepForm">
+            <div class="mb-3">
+              <label for="stepName" class="form-label">Step Name</label>
+              <input type="text" class="form-control" id="stepName" value="Send Welcome Email">
+            </div>
+            <div class="mb-3">
+              <label for="emailSubject" class="form-label">Email Subject</label>
+              <input type="text" class="form-control" id="emailSubject" value="Welcome to TaskFlow!">
+            </div>
+            <div class="mb-3">
+              <label for="emailBody" class="form-label">Email Body</label>
+              <textarea class="form-control" id="emailBody" rows="4">Hi {{user.name}},
+
+Welcome to TaskFlow! We're excited to have you on board.
+
+Best regards,
+The TaskFlow Team</textarea>
+              <small class="text-muted">You can use variables like {{user.name}}, {{task.title}}, etc.</small>
+            </div>
+            <div class="mb-3">
+              <label for="emailRecipient" class="form-label">Recipient</label>
+              <select class="form-select" id="emailRecipient">
+                <option value="trigger.user">Trigger User</option>
+                <option value="task.assignee" selected>Task Assignee</option>
+                <option value="custom">Custom Email</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="recipientEmail" class="form-label">Custom Email</label>
+              <input type="email" class="form-control" id="recipientEmail" placeholder="Enter email address" disabled>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="saveStepBtn">Save Changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Integrations Modal -->
+  <div class="modal fade" id="integrationsModal" tabindex="-1" aria-labelledby="integrationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="integrationsModalLabel">Third-Party Integrations</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted mb-4">Connect your account with these services to enable automations.</p>
+          
+          <div class="list-group" id="integrationsList">
+            <!-- Integrations will be loaded here by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/automations.js"></script>
+</body>
+</html>

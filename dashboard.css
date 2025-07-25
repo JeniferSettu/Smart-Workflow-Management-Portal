@@ -1,0 +1,193 @@
+/* Dashboard specific styles */
+
+/* Workflow items */
+.workflow-item {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.workflow-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Workflow steps visualization */
+.workflow-steps {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.workflow-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 80px;
+  text-align: center;
+}
+
+.step-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+  background-color: var(--neutral-200);
+  color: var(--neutral-600);
+}
+
+.workflow-step.completed .step-icon {
+  background-color: var(--success-light);
+  color: var(--success);
+}
+
+.workflow-step.in-progress .step-icon {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.workflow-step.pending .step-icon {
+  background-color: var(--neutral-200);
+  color: var(--neutral-600);
+}
+
+.workflow-connector {
+  flex: 1;
+  min-width: 30px;
+  height: 2px;
+  background-color: var(--neutral-300);
+  margin: 0 4px;
+  position: relative;
+  top: -20px;
+}
+
+.workflow-connector.completed {
+  background-color: var(--success);
+}
+
+.workflow-connector.in-progress {
+  background: linear-gradient(90deg, var(--success) 0%, var(--success) 50%, var(--neutral-300) 50%, var(--neutral-300) 100%);
+}
+
+/* Deadlines list styles */
+.deadline-item {
+  padding: 12px 16px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.deadline-item:hover {
+  transform: translateX(5px);
+  background-color: var(--primary-light);
+}
+
+.deadline-marker {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+
+.deadline-marker.today {
+  background-color: var(--danger);
+}
+
+.deadline-marker.upcoming {
+  background-color: var(--warning);
+}
+
+.deadline-marker.future {
+  background-color: var(--info);
+}
+
+/* Task details style */
+.task-detail-header {
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-light);
+}
+
+.task-detail-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.task-meta-item {
+  display: flex;
+  align-items: center;
+}
+
+.task-meta-item i {
+  margin-right: 6px;
+  color: var(--text-secondary);
+}
+
+.task-comments {
+  margin-top: 1.5rem;
+}
+
+.comment-item {
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: var(--border-radius);
+  background-color: var(--bg-light);
+}
+
+.comment-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+.comment-content {
+  flex: 1;
+}
+
+.comment-actions {
+  margin-top: 8px;
+}
+
+.comment-actions button {
+  font-size: 0.8rem;
+  padding: 2px 8px;
+}
+
+/* Make the workflow items responsive */
+@media (max-width: 767.98px) {
+  .workflow-steps {
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+    scrollbar-width: none; /* For Firefox */
+  }
+  
+  .workflow-steps::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+  }
+  
+  .workflow-step {
+    scroll-snap-align: center;
+  }
+  
+  .step-label {
+    font-size: 0.75rem;
+  }
+}
+
+/* Dark mode adjustments for dashboard */
+.dark-theme .workflow-step.pending .step-icon {
+  background-color: var(--neutral-700);
+  color: var(--neutral-400);
+}
+
+.dark-theme .workflow-connector {
+  background-color: var(--neutral-600);
+}
+
+.dark-theme .comment-item {
+  background-color: var(--neutral-700);
+}

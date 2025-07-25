@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow - Enterprise Automation Dashboard</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body>
+  <!-- Toast Container -->
+  <div class="toast-container position-fixed top-0 end-0 p-3">
+    <!-- Toasts will be added here dynamically -->
+  </div>
+
+  <div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <div class="d-flex align-items-center">
+          <i class="bi bi-layout-text-sidebar-reverse fs-4 me-2"></i>
+          <h5 class="mb-0">TaskFlow</h5>
+        </div>
+        <button class="btn btn-link sidebar-close d-md-none" id="sidebarClose">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+      <ul class="sidebar-menu list-unstyled">
+        <li class="sidebar-item active">
+          <a href="index.html" class="sidebar-link">
+            <i class="bi bi-speedometer2 me-2"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="tasks.html" class="sidebar-link">
+            <i class="bi bi-list-check me-2"></i>
+            <span>Tasks</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="automations.html" class="sidebar-link">
+            <i class="bi bi-gear me-2"></i>
+            <span>Automations</span>
+          </a>
+        </li>
+        <li class="sidebar-item">
+          <a href="settings.html" class="sidebar-link">
+            <i class="bi bi-sliders me-2"></i>
+            <span>Settings</span>
+          </a>
+        </li>
+      </ul>
+      <div class="sidebar-footer">
+        <button class="btn btn-sm btn-outline-secondary w-100" data-bs-toggle="modal" data-bs-target="#integrationsModal">
+          <i class="bi bi-box-arrow-in-right me-2"></i>Integrations
+        </button>
+      </div>
+    </nav>
+
+    <!-- Page Content -->
+    <div class="content">
+      <!-- Top Navigation -->
+      <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container-fluid">
+          <button class="btn btn-link" id="sidebarToggle">
+            <i class="bi bi-list fs-4"></i>
+          </button>
+          <form class="d-flex mx-auto search-form">
+            <div class="input-group">
+              <span class="input-group-text bg-white border-end-0">
+                <i class="bi bi-search"></i>
+              </span>
+              <input type="search" class="form-control border-start-0" placeholder="Search tasks..." id="searchInput">
+            </div>
+          </form>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item dropdown">
+              <a class="nav-link" href="#" role="button" id="notificationsDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-bell"></i>
+                <span class="badge rounded-pill bg-danger">3</span>
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                <li><h6 class="dropdown-header">Notifications</h6></li>
+                <li><a class="dropdown-item" href="#">New task assigned</a></li>
+                <li><a class="dropdown-item" href="#">Workflow completed</a></li>
+                <li><a class="dropdown-item" href="#">Integration update</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <button class="btn btn-link nav-link" id="themeToggle">
+                <i class="bi bi-moon"></i>
+              </button>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <img src="https://via.placeholder.com/36" alt="User" class="rounded-circle" width="32" height="32">
+              </a>
+              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                <li><a class="dropdown-item" href="#">Profile</a></li>
+                <li><a class="dropdown-item" href="#">Settings</a></li>
+                <li><hr class="dropdown-divider"></li>
+                <li><a class="dropdown-item" href="#">Sign out</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+      <!-- Main Content -->
+      <main class="container-fluid py-4">
+        <div class="row mb-4">
+          <div class="col-12">
+            <h1 class="h3 mb-0">Dashboard</h1>
+            <p class="text-muted">Welcome back,Jenifer! Here's your workflow status.</p>
+          </div>
+        </div>
+
+        <!-- Summary Cards -->
+        <div class="row mb-4 g-3">
+          <div class="col-sm-6 col-xl-3">
+            <div class="card summary-card border-0 h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle summary-icon bg-primary bg-opacity-10 p-3 me-3">
+                    <i class="bi bi-list-check text-primary"></i>
+                  </div>
+                  <div>
+                    <h5 class="card-title mb-0">Total Tasks</h5>
+                    <p class="text-muted small mb-0">All active tasks</p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <h2 class="mb-0">24</h2>
+                  <div class="progress mt-2" style="height: 6px;">
+                    <div class="progress-bar bg-primary" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="card summary-card border-0 h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle summary-icon bg-success bg-opacity-10 p-3 me-3">
+                    <i class="bi bi-check2-circle text-success"></i>
+                  </div>
+                  <div>
+                    <h5 class="card-title mb-0">Completed</h5>
+                    <p class="text-muted small mb-0">Tasks completed</p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <h2 class="mb-0">12</h2>
+                  <div class="progress mt-2" style="height: 6px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="card summary-card border-0 h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle summary-icon bg-warning bg-opacity-10 p-3 me-3">
+                    <i class="bi bi-hourglass-split text-warning"></i>
+                  </div>
+                  <div>
+                    <h5 class="card-title mb-0">In Progress</h5>
+                    <p class="text-muted small mb-0">Active tasks</p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <h2 class="mb-0">8</h2>
+                  <div class="progress mt-2" style="height: 6px;">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 33%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-6 col-xl-3">
+            <div class="card summary-card border-0 h-100">
+              <div class="card-body">
+                <div class="d-flex align-items-center">
+                  <div class="rounded-circle summary-icon bg-danger bg-opacity-10 p-3 me-3">
+                    <i class="bi bi-exclamation-triangle text-danger"></i>
+                  </div>
+                  <div>
+                    <h5 class="card-title mb-0">Overdue</h5>
+                    <p class="text-muted small mb-0">Delayed tasks</p>
+                  </div>
+                </div>
+                <div class="mt-3">
+                  <h2 class="mb-0">4</h2>
+                  <div class="progress mt-2" style="height: 6px;">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 17%;" aria-valuenow="17" aria-valuemin="0" aria-valuemax="100"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent Tasks -->
+        <div class="row mb-4">
+          <div class="col-12">
+            <div class="card border-0">
+              <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Tasks</h5>
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="taskFilterDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    All Tasks
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="taskFilterDropdown">
+                    <li><a class="dropdown-item active" href="#">All Tasks</a></li>
+                    <li><a class="dropdown-item" href="#">My Tasks</a></li>
+                    <li><a class="dropdown-item" href="#">Assigned to Others</a></li>
+                  </ul>
+                </div>
+              </div>
+              <div class="card-body p-0">
+                <div class="table-responsive">
+                  <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                      <tr>
+                        <th scope="col">Task</th>
+                        <th scope="col">Assigned To</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Due Date</th>
+                        <th scope="col">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody id="taskTableBody">
+                      <!-- Tasks will be loaded here by JavaScript -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="card-footer bg-white text-center">
+                <a href="tasks.html" class="btn btn-sm btn-outline-primary">View All Tasks</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active Workflows -->
+        <div class="row">
+          <div class="col-md-6 col-lg-8 mb-4">
+            <div class="card border-0 h-100">
+              <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Active Workflows</h5>
+                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#newWorkflowModal">
+                  <i class="bi bi-plus"></i> New
+                </button>
+              </div>
+              <div class="card-body">
+                <div class="workflow-item p-3 mb-3 border rounded position-relative">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">Customer Onboarding</h6>
+                    <span class="badge bg-success">Active</span>
+                  </div>
+                  <div class="d-flex workflow-steps">
+                    <div class="workflow-step completed">
+                      <div class="step-icon">
+                        <i class="bi bi-person-plus"></i>
+                      </div>
+                      <div class="step-label">Create Account</div>
+                    </div>
+                    <div class="workflow-connector completed"></div>
+                    <div class="workflow-step completed">
+                      <div class="step-icon">
+                        <i class="bi bi-envelope"></i>
+                      </div>
+                      <div class="step-label">Send Welcome</div>
+                    </div>
+                    <div class="workflow-connector in-progress"></div>
+                    <div class="workflow-step in-progress">
+                      <div class="step-icon">
+                        <i class="bi bi-telephone"></i>
+                      </div>
+                      <div class="step-label">Schedule Call</div>
+                    </div>
+                    <div class="workflow-connector pending"></div>
+                    <div class="workflow-step pending">
+                      <div class="step-icon">
+                        <i class="bi bi-check-square"></i>
+                      </div>
+                      <div class="step-label">Follow Up</div>
+                    </div>
+                  </div>
+                  <div class="mt-2 d-flex align-items-center">
+                    <small class="text-muted">Progress:</small>
+                    <div class="progress ms-2 flex-grow-1" style="height: 6px;">
+                      <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <small class="ms-2">50%</small>
+                  </div>
+                </div>
+
+                <div class="workflow-item p-3 mb-3 border rounded position-relative">
+                  <div class="d-flex justify-content-between align-items-center mb-2">
+                    <h6 class="mb-0">Bug Fix Process</h6>
+                    <span class="badge bg-warning text-dark">In Progress</span>
+                  </div>
+                  <div class="d-flex workflow-steps">
+                    <div class="workflow-step completed">
+                      <div class="step-icon">
+                        <i class="bi bi-bug"></i>
+                      </div>
+                      <div class="step-label">Log Issue</div>
+                    </div>
+                    <div class="workflow-connector completed"></div>
+                    <div class="workflow-step completed">
+                      <div class="step-icon">
+                        <i class="bi bi-person-workspace"></i>
+                      </div>
+                      <div class="step-label">Assign Dev</div>
+                    </div>
+                    <div class="workflow-connector in-progress"></div>
+                    <div class="workflow-step in-progress">
+                      <div class="step-icon">
+                        <i class="bi bi-tools"></i>
+                      </div>
+                      <div class="step-label">Fix Bug</div>
+                    </div>
+                    <div class="workflow-connector pending"></div>
+                    <div class="workflow-step pending">
+                      <div class="step-icon">
+                        <i class="bi bi-check2-all"></i>
+                      </div>
+                      <div class="step-label">QA Test</div>
+                    </div>
+                  </div>
+                  <div class="mt-2 d-flex align-items-center">
+                    <small class="text-muted">Progress:</small>
+                    <div class="progress ms-2 flex-grow-1" style="height: 6px;">
+                      <div class="progress-bar" role="progressbar" style="width: 60%;" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <small class="ms-2">60%</small>
+                  </div>
+                </div>
+              </div>
+              <div class="card-footer bg-white text-center">
+                <a href="automations.html" class="btn btn-sm btn-outline-primary">Manage Workflows</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card border-0 h-100">
+              <div class="card-header bg-white">
+                <h5 class="mb-0">Upcoming Deadlines</h5>
+              </div>
+              <div class="card-body p-0">
+                <ul class="list-group list-group-flush" id="deadlinesList">
+                  <!-- Deadlines will be loaded here by JavaScript -->
+                </ul>
+              </div>
+              <div class="card-footer bg-white text-center">
+                <button class="btn btn-sm btn-outline-primary" id="refreshDeadlines">
+                  <i class="bi bi-arrow-clockwise"></i> Refresh
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Task Detail Modal -->
+  <div class="modal fade" id="taskDetailModal" tabindex="-1" aria-labelledby="taskDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content border-0">
+        <div class="modal-header">
+          <h5 class="modal-title" id="taskDetailModalLabel">Task Details</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" id="taskDetailContent">
+          <!-- Task details will be loaded here -->
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Edit Task</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Workflow Modal -->
+  <div class="modal fade" id="newWorkflowModal" tabindex="-1" aria-labelledby="newWorkflowModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="newWorkflowModalLabel">Create New Workflow</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="newWorkflowForm">
+            <div class="mb-3">
+              <label for="workflowName" class="form-label">Workflow Name</label>
+              <input type="text" class="form-control" id="workflowName" required>
+            </div>
+            <div class="mb-3">
+              <label for="workflowDesc" class="form-label">Description</label>
+              <textarea class="form-control" id="workflowDesc" rows="3"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="form-label">Initial Steps</label>
+              <div class="d-flex workflow-steps mb-2">
+                <div class="workflow-step active">
+                  <div class="step-icon">
+                    <i class="bi bi-1-circle"></i>
+                  </div>
+                  <div class="step-label">Step 1</div>
+                </div>
+                <div class="workflow-connector active"></div>
+                <div class="workflow-step active">
+                  <div class="step-icon">
+                    <i class="bi bi-2-circle"></i>
+                  </div>
+                  <div class="step-label">Step 2</div>
+                </div>
+                <div class="workflow-connector active"></div>
+                <div class="workflow-step active">
+                  <div class="step-icon">
+                    <i class="bi bi-plus-circle"></i>
+                  </div>
+                  <div class="step-label">Add Step</div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" id="createWorkflowBtn">Create Workflow</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Integrations Modal -->
+  <div class="modal fade" id="integrationsModal" tabindex="-1" aria-labelledby="integrationsModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="integrationsModalLabel">Third-Party Integrations</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted mb-4">Connect your account with these services to enable automations.</p>
+          
+          <div class="list-group" id="integrationsList">
+            <!-- Integrations will be loaded here by JavaScript -->
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/theme.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

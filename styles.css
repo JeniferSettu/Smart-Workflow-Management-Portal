@@ -1,0 +1,242 @@
+/* General Styles */
+body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* Wrapper Layout */
+.wrapper {
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+/* Sidebar Styles */
+.sidebar {
+  min-width: 250px;
+  max-width: 250px;
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border-light);
+  transition: all 0.3s;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  position: fixed;
+  z-index: 1000;
+}
+
+.sidebar-header {
+  padding: 1.5rem 1rem;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar-menu {
+  padding: 1rem 0;
+  flex-grow: 1;
+}
+
+.sidebar-item {
+  position: relative;
+  margin-bottom: 0.25rem;
+}
+
+.sidebar-link {
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  color: var(--text-secondary);
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.sidebar-link:hover {
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.sidebar-item.active .sidebar-link {
+  color: var(--primary);
+  background-color: var(--primary-light);
+  font-weight: 500;
+}
+
+.sidebar-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid var(--border-light);
+}
+
+/* Content Styles */
+.content {
+  width: 100%;
+  padding-left: 250px;
+  min-height: 100vh;
+  transition: all 0.3s;
+}
+
+/* Sidebar Toggle for Mobile */
+@media (max-width: 767.98px) {
+  .sidebar {
+    margin-left: -250px;
+  }
+  
+  .sidebar.active {
+    margin-left: 0;
+  }
+  
+  .content {
+    padding-left: 0;
+  }
+}
+
+/* Navigation Styles */
+.navbar {
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+}
+
+.search-form {
+  max-width: 400px;
+  width: 100%;
+}
+
+/* Card Styles */
+.card {
+  border-radius: 0.5rem;
+  border: none;
+  box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+.card-header {
+  border-bottom: 1px solid var(--border-light);
+  background-color: var(--bg-card);
+  padding: 1rem 1.5rem;
+}
+
+.card-footer {
+  border-top: 1px solid var(--border-light);
+  background-color: var(--bg-card);
+  padding: 1rem 1.5rem;
+}
+
+/* Summary Cards */
+.summary-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-5px);
+}
+
+.summary-icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.summary-icon i {
+  font-size: 1.5rem;
+}
+
+/* Animated Elements */
+.btn, .nav-link, .sidebar-link {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Toast customization */
+.toast {
+  background-color: var(--bg-card);
+  color: var(--text-primary);
+  border: none;
+  box-shadow: var(--shadow-md);
+}
+
+/* Integration Icons */
+.integration-icon {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-radius: 8px;
+}
+
+.integration-icon i {
+  font-size: 1.25rem;
+}
+
+/* Dark mode overrides for specific elements */
+.dark-theme .navbar-light {
+  background-color: var(--neutral-800) !important;
+}
+
+.dark-theme .navbar-light .navbar-nav .nav-link {
+  color: var(--neutral-300);
+}
+
+.dark-theme .navbar-light .navbar-nav .nav-link:hover,
+.dark-theme .navbar-light .navbar-nav .nav-link:focus {
+  color: var(--white);
+}
+
+/* Forms in dark mode */
+.dark-theme .form-control,
+.dark-theme .form-select {
+  background-color: var(--neutral-700);
+  border-color: var(--neutral-600);
+  color: var(--neutral-200);
+}
+
+.dark-theme .form-control:focus,
+.dark-theme .form-select:focus {
+  background-color: var(--neutral-700);
+  color: var(--white);
+}
+
+.dark-theme .input-group-text {
+  background-color: var(--neutral-700);
+  border-color: var(--neutral-600);
+  color: var(--neutral-300);
+}
+
+/* Animation for page transitions */
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 991.98px) {
+  .content {
+    padding-left: 0;
+  }
+  
+  .sidebar {
+    margin-left: -250px;
+  }
+  
+  .sidebar.active {
+    margin-left: 0;
+  }
+}

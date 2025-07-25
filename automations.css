@@ -1,0 +1,251 @@
+/* Automations specific styles */
+
+/* Automation cards */
+.automation-card {
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.automation-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.automation-card .card-footer {
+  background-color: transparent;
+}
+
+.automation-status {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}
+
+/* Automation canvas */
+.automation-canvas {
+  background-color: var(--bg-light);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  position: relative;
+}
+
+.automation-trigger {
+  display: flex;
+  align-items: center;
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.trigger-icon {
+  margin-right: 1rem;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-radius: 50%;
+}
+
+.trigger-icon i {
+  font-size: 1.25rem;
+}
+
+.trigger-content {
+  flex: 1;
+}
+
+.trigger-content h6 {
+  margin-bottom: 0.5rem;
+  color: var(--text-secondary);
+}
+
+.automation-connector {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  height: 40px;
+}
+
+.automation-connector-line {
+  width: 2px;
+  height: 100%;
+  background-color: var(--primary);
+}
+
+.add-step-connector {
+  height: 60px;
+}
+
+.add-step-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+}
+
+.automation-step {
+  background-color: var(--bg-card);
+  border-radius: var(--border-radius);
+  padding: 1rem;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.automation-step:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.automation-step-header {
+  display: flex;
+  align-items: flex-start;
+}
+
+.step-icon {
+  margin-right: 1rem;
+  min-width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--primary-light);
+  color: var(--primary);
+  border-radius: 50%;
+  transition: all 0.2s ease;
+}
+
+.step-content {
+  flex: 1;
+}
+
+.step-content h6 {
+  margin-bottom: 0.25rem;
+}
+
+.step-content p {
+  color: var(--text-secondary);
+  font-size: 0.875rem;
+}
+
+.step-actions {
+  display: flex;
+  align-items: center;
+}
+
+/* Automation step types */
+.automation-step[data-step-type="email"] .step-icon {
+  background-color: var(--info-light);
+  color: var(--info);
+}
+
+.automation-step[data-step-type="task"] .step-icon {
+  background-color: var(--success-light);
+  color: var(--success);
+}
+
+.automation-step[data-step-type="condition"] .step-icon {
+  background-color: var(--warning-light);
+  color: var(--warning);
+}
+
+.automation-step[data-step-type="wait"] .step-icon {
+  background-color: var(--secondary-light);
+  color: var(--secondary);
+}
+
+.automation-step[data-step-type="notify"] .step-icon {
+  background-color: var(--accent-light);
+  color: var(--accent);
+}
+
+/* Editable title */
+.editable-title {
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.editable-title:hover, .editable-title:focus {
+  border-color: var(--border-color);
+  background-color: var(--bg-light);
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--border-radius);
+}
+
+/* Integration icons */
+.integration-card {
+  height: 100%;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.integration-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.integration-card .card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.integration-logo {
+  width: 60px;
+  height: 60px;
+  border-radius: 12px;
+  background-color: var(--bg-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.integration-logo i {
+  font-size: 2rem;
+  color: var(--primary);
+}
+
+.integration-status {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+}
+
+/* Step modal list items */
+.list-group-item[data-step-type] {
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.list-group-item[data-step-type]:hover {
+  transform: translateX(5px);
+  background-color: var(--bg-light);
+}
+
+.list-group-item[data-step-type] .step-icon {
+  min-width: 36px;
+  width: 36px;
+  height: 36px;
+}
+
+/* Dark mode adjustments */
+.dark-theme .automation-canvas {
+  background-color: var(--neutral-700);
+}
+
+.dark-theme .editable-title:hover, 
+.dark-theme .editable-title:focus {
+  background-color: var(--neutral-700);
+}
+
+.dark-theme .list-group-item[data-step-type]:hover {
+  background-color: var(--neutral-700);
+}
